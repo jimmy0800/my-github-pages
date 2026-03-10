@@ -5,80 +5,178 @@ description: "基於真實生活消耗數據的精準健身與營養計畫，助
 thumbnail: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
 ---
 
-<div class="content-body">
-    <header style="text-align: center; margin-bottom: 30px; padding: 40px 20px; background: linear-gradient(135deg, #2563eb, #1e40af); color: white; border-radius: 16px;">
-        <h1 style="color: white; margin: 0;">六月底腹肌最大化策略</h1>
-        <p style="opacity: 0.9; margin-top: 10px;">基於真實生活消耗數據 · 精準營養控制 · 科學訓練</p>
+<style>
+    .fitness-content {
+        --f-primary: #2563eb;
+        --f-secondary: #1e40af;
+        --f-accent: #f59e0b;
+        --f-bg: #f3f4f6;
+        --f-card-bg: #ffffff;
+        --f-text-main: #1f2937;
+        --f-text-light: #6b7280;
+        --f-success: #10b981;
+        font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+        color: var(--f-text-main);
+        line-height: 1.6;
+    }
+    .fitness-content header.f-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, var(--f-primary), var(--f-secondary));
+        color: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .fitness-content header.f-header h1 { color: white !important; margin-bottom: 10px; font-size: 1.8rem; border: none; }
+    .fitness-content header.f-header p { font-size: 1rem; opacity: 0.9; margin: 0; color: white; }
+    .fitness-content .f-card {
+        background: var(--f-card-bg);
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid var(--f-primary);
+    }
+    .fitness-content .f-card h2 {
+        font-size: 1.4rem;
+        color: var(--f-secondary);
+        margin-bottom: 16px;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 8px;
+        margin-top: 0;
+    }
+    .fitness-content .f-highlight-box {
+        background-color: #eff6ff;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        margin: 10px 0;
+    }
+    .fitness-content .f-highlight-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--f-primary);
+        display: block;
+    }
+    .fitness-content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+    }
+    .fitness-content th, .fitness-content td {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .fitness-content .f-macros-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .fitness-content .f-macro-item {
+        text-align: center;
+        background: #f9fafb;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    .fitness-content .f-workout-group {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    .fitness-content .f-exercise-list { list-style: none; padding: 0; margin: 0; }
+    .fitness-content .f-exercise-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dashed #e5e7eb;
+    }
+    .fitness-content .f-ex-sets {
+        background: var(--f-primary);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    @media (max-width: 600px) {
+        .fitness-content .f-macros-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="fitness-content">
+    <header class="f-header">
+        <h1>六月底腹肌最大化策略</h1>
+        <p>基於真實生活消耗數據 · 精準營養控制 · 科學訓練</p>
     </header>
 
-    <section style="background: #ffffff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-left: 5px solid #2563eb;">
-        <h2 style="color: #1e40af; margin-bottom: 16px; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">一、當前體態評估</h2>
+    <section class="f-card">
+        <h2>一、當前體態評估</h2>
         <p>根據腰圍身高比 (WHtR) 估算，您的真實體脂率比 InBody 數據更準確。</p>
-        <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <table>
             <thead>
-                <tr style="background-color: #f9fafb;">
-                    <th style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left;">指標</th>
-                    <th style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left;">數值</th>
-                    <th style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left;">推估體脂</th>
-                </tr>
+                <tr><th>指標</th><th>數值</th><th>推估體脂</th></tr>
             </thead>
             <tbody>
-                <tr>
-                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">身高</td>
-                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">175 cm</td>
-                    <td rowspan="3" style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center; vertical-align: middle; font-weight: bold; color: #2563eb;">約 11–12%</td>
-                </tr>
-                <tr>
-                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">體重</td>
-                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">72 kg</td>
-                </tr>
-                <tr>
-                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">腰圍</td>
-                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">75 cm (0.43)</td>
-                </tr>
+                <tr><td>身高</td><td>175 cm</td><td rowspan="3" style="text-align: center; vertical-align: middle; font-weight: bold; color: #2563eb;">約 11–12%</td></tr>
+                <tr><td>體重</td><td>72 kg</td></tr>
+                <tr><td>腰圍</td><td>75 cm (0.43)</td></tr>
             </tbody>
         </table>
-        <div style="background-color: #eff6ff; border-radius: 8px; padding: 15px; text-align: center; margin: 10px 0;">
-            <span style="font-size: 1.5rem; font-weight: bold; color: #2563eb; display: block;">距離目標非常近</span>
+        <div class="f-highlight-box">
+            <span class="f-highlight-number">距離目標非常近</span>
             <span style="font-size: 0.9rem; color: #6b7280;">腹肌明顯通常需體脂 10–11%，您僅需最後 2% 的優化</span>
         </div>
     </section>
 
-    <section style="background: #ffffff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-left: 5px solid #2563eb;">
-        <h2 style="color: #1e40af; margin-bottom: 16px; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">二、熱量與營養策略</h2>
-        <p>您的日常總消耗 (TDEE) 約為 <strong>2300–2400 kcal</strong>。為了腹肌清晰，我們採用輕微赤字。</p>
-        <div style="background-color: #eff6ff; border-radius: 8px; padding: 15px; text-align: center; margin: 10px 0;">
-            <span style="font-size: 1.5rem; font-weight: bold; color: #2563eb; display: block;">2000–2100 kcal</span>
+    <section class="f-card">
+        <h2>二、熱量與營養策略</h2>
+        <p>您的日常總消耗 (TDEE) 約為 <strong>2300–2400 kcal</strong>。</p>
+        <div class="f-highlight-box">
+            <span class="f-highlight-number">2000–2100 kcal</span>
             <span style="font-size: 0.9rem; color: #6b7280;">建議每日攝取熱量</span>
         </div>
-        <h3 style="margin: 16px 0 8px;">三大營養素分配 (以 2100 kcal 為例)</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 15px;">
-            <div style="text-align: center; background: #f9fafb; padding: 10px; border-radius: 8px;">
-                <div style="font-weight: bold; font-size: 1.1rem;">蛋白質 150g</div>
-                <div style="font-size: 0.8rem; color: #6b7280;">28% (600 kcal)</div>
-            </div>
-            <div style="text-align: center; background: #f9fafb; padding: 10px; border-radius: 8px;">
-                <div style="font-weight: bold; font-size: 1.1rem;">脂肪 60g</div>
-                <div style="font-size: 0.8rem; color: #6b7280;">26% (540 kcal)</div>
-            </div>
-            <div style="text-align: center; background: #f9fafb; padding: 10px; border-radius: 8px;">
-                <div style="font-weight: bold; font-size: 1.1rem;">碳水 230g</div>
-                <div style="font-size: 0.8rem; color: #6b7280;">46% (920 kcal)</div>
-            </div>
+        <div class="f-macros-grid">
+            <div class="f-macro-item"><strong>蛋白質 150g</strong><br><small>28%</small></div>
+            <div class="f-macro-item"><strong>脂肪 60g</strong><br><small>26%</small></div>
+            <div class="f-macro-item"><strong>碳水 230g</strong><br><small>46%</small></div>
         </div>
     </section>
 
-    <section style="background: #ffffff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); border-left: 5px solid #2563eb;">
-        <h2 style="color: #1e40af; margin-bottom: 16px; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">三、活動量與有氧安排</h2>
-        <h3 style="margin: 16px 0 8px;">1. 日常步數</h3>
-        <p>目前 5950 步稍低，建議提升以增加非運動消耗。</p>
-        <div style="background-color: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 15px; text-align: center; margin: 10px 0;">
-            <span style="font-size: 1.5rem; font-weight: bold; color: #10b981; display: block;">8000–9000 步</span>
+    <section class="f-card">
+        <h2>三、活動量與有氧安排</h2>
+        <div class="f-highlight-box" style="background-color: #ecfdf5; border: 1px solid #10b981;">
+            <span class="f-highlight-number" style="color: #10b981;">8000–9000 步</span>
             <span style="font-size: 0.9rem; color: #6b7280;">目標：每天多 20 分鐘快走</span>
         </div>
     </section>
 
-    <footer style="text-align: center; font-size: 0.85rem; color: #6b7280; margin-top: 40px; padding: 20px;">
+    <section class="f-card">
+        <h2>四、腹肌重訓計畫 (每週 3 次)</h2>
+        <div class="f-workout-group">
+            <h4 style="color: #2563eb; margin-bottom: 10px; margin-top: 0;">腹肌課表 A</h4>
+            <ul class="f-exercise-list">
+                <li><span>纜繩捲腹 (Cable Crunch)</span> <span class="f-ex-sets">4 × 12</span></li>
+                <li><span>懸垂舉腿 (Hanging Leg Raise)</span> <span class="f-ex-sets">4 × 10</span></li>
+                <li><span>健腹輪 (Ab Wheel)</span> <span class="f-ex-sets">3 × 10</span></li>
+            </ul>
+        </div>
+        <div class="f-workout-group">
+            <h4 style="color: #2563eb; margin-bottom: 10px; margin-top: 0;">腹肌課表 B</h4>
+            <ul class="f-exercise-list">
+                <li><span>負重下斜仰臥起坐</span> <span class="f-ex-sets">4 × 12</span></li>
+                <li><span>反向捲腹 (Reverse Crunch)</span> <span class="f-ex-sets">3 × 15</span></li>
+                <li><span>側棒式 (Side Plank)</span> <span class="f-ex-sets">3 × 40s</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <footer style="text-align: center; font-size: 0.85rem; color: #6b7280; margin-top: 40px;">
         <p>本計畫基於個人數據估算，請根據身體感受適度調整。<br>Keep Going!</p>
     </footer>
 </div>
