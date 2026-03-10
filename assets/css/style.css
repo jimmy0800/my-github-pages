@@ -1,51 +1,219 @@
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f4f4; color: #333; line-height: 1.6; }
-.container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+/* 全域變數與基礎設定 */
+:root {
+    --primary-color: #007aff;
+    --primary-gradient: linear-gradient(135deg, #007aff 0%, #00c6ff 100%);
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-main: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border-radius: 16px;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+    --container-width: 1100px;
+}
 
-/* 卡片網格 */
+/* 支援 iOS 深色模式 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #000000;
+        --card-bg: #1c1c1e;
+        --text-main: #f5f5f7;
+        --text-muted: #86868b;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* 頁首設計 */
+.site-header {
+    padding: 80px 0 40px;
+    text-align: center;
+}
+
+.site-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.site-description {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* 區塊標題 */
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 40px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* 卡片網格佈局 */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 32px;
+    margin-bottom: 80px;
 }
 
 /* 單個卡片樣式 */
 .card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
     overflow: hidden;
-    transition: 0.3s;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
 }
-.card:hover { transform: translateY(-5px); }
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
 
 .card-image {
-    height: 160px;
+    height: 200px;
     background-size: cover;
     background-position: center;
-    background-color: #ddd;
+    background-color: #e5e5e7;
 }
 
-.card-content { padding: 20px; }
-.card-content h3 { margin-top: 0; font-size: 1.25rem; }
-.card-content p { color: #666; font-size: 0.9rem; line-height: 1.4; }
+.card-content {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-.btn {
+.post-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.card-content h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.card-content p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 按鈕樣式 */
+.btn-primary {
     display: inline-block;
-    margin-top: 10px;
-    padding: 8px 16px;
-    background: #007bff;
+    padding: 12px 24px;
+    background: var(--primary-gradient);
     color: white;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.2s;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    transition: opacity 0.2s;
+    margin-top: auto;
 }
-.btn:hover { background: #0056b3; }
 
-.content {
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    margin-top: 20px;
+.btn-primary:hover {
+    opacity: 0.9;
 }
-.content img { max-width: 100%; height: auto; border-radius: 8px; }
+
+/* 文章頁面樣式 */
+.post-layout .site-header {
+    padding: 40px 0;
+    text-align: left;
+}
+
+.back-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: inline-block;
+}
+
+.post-meta {
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.post-content {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 60px;
+}
+
+.post-banner {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+}
+
+.content-body {
+    padding: 48px;
+    font-size: 1.1rem;
+}
+
+.content-body h1, .content-body h2 { margin: 32px 0 16px; }
+.content-body p { margin-bottom: 20px; }
+.content-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px 0;
+}
+
+/* 頁尾 */
+.site-footer {
+    padding: 60px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .site-header h1 { font-size: 2.2rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .content-body { padding: 24px; }
+    .post-banner { height: 250px; }
+}

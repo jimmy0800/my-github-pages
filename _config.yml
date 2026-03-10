@@ -1,9 +1,9 @@
 title: 我的作品集
 description: 這是一個自動化生成的卡片式作品集
-baseurl: "" # 留空，除非你的 repo 名稱不是 <username>.github.io
-url: "" # 你的 GitHub Pages 網址
+baseurl: "/my-github-pages" # 設定為專案名稱以確保資源路徑正確
+url: "https://jimmy0800.github.io"
 markdown: kramdown
-theme: jekyll-theme-minimal
+# 移除 theme 以使用完全自定義的佈局
 plugins:
   - jekyll-feed
   - jekyll-seo-tag

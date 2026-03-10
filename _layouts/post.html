@@ -2,18 +2,37 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>{{ page.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - {{ site.title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
-<body>
-    <div class="container">
-        <a href="{{ '/' | relative_url }}" class="btn">← 返回首頁</a>
-        <div class="content">
+<body class="post-layout">
+
+    <header class="site-header">
+        <div class="container">
+            <a href="{{ '/' | relative_url }}" class="back-link">← 返回首頁</a>
             <h1>{{ page.title }}</h1>
-            <p><em>發布日期: {{ page.date | date: "%Y-%m-%d" }}</em></p>
-            <hr>
-            {{ content }}
+            <p class="post-meta">發布日期: {{ page.date | date: "%Y-%m-%d" }}</p>
         </div>
-    </div>
+    </header>
+
+    <main class="container">
+        <article class="post-content">
+            {% if page.thumbnail %}
+            <div class="post-banner" style="background-image: url('{{ page.thumbnail }}');"></div>
+            {% endif %}
+            
+            <div class="content-body">
+                {{ content }}
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. Built with Jekyll.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
