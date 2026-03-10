@@ -1,0 +1,17 @@
+title: 我的作品集
+description: 這是一個自動化生成的卡片式作品集
+baseurl: "" # 留空，除非你的 repo 名稱不是 <username>.github.io
+url: "" # 你的 GitHub Pages 網址
+markdown: kramdown
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/

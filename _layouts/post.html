@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+    <div class="container">
+        <a href="{{ '/' | relative_url }}" class="btn">← 返回首頁</a>
+        <div class="content">
+            <h1>{{ page.title }}</h1>
+            <p><em>發布日期: {{ page.date | date: "%Y-%m-%d" }}</em></p>
+            <hr>
+            {{ content }}
+        </div>
+    </div>
+</body>
+</html>
