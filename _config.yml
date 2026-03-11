@@ -1,5 +1,5 @@
-title: 我的作品集
-description: 這是一個自動化生成的卡片式作品集
+title: 個人實用工具箱
+description: 存放各類 Web 小工具、實驗性程式碼以及個人生活應用程式的倉庫
 baseurl: "/my-github-pages" # 設定為專案名稱以確保資源路徑正確
 url: "https://jimmy0800.github.io"
 markdown: kramdown
