@@ -1,12 +1,121 @@
 ---
-layout: post
-title: "我的新專案 A"
-description: "這是一個關於自動化腳本的說明頁面"
+layout: null
+title: "基準價格反推計算機"
+description: "輔助確認股價下單金額的小計算機"
 thumbnail: "https://via.placeholder.com/300x180"
 ---
 
-<div class="content">
-    <h1>{{ page.title }}</h1>
-    <p>這是我的專案 A 內容。這是一個範例頁面，展示了如何透過 Jekyll 自動生成卡片。</p>
-    <img src="{{ page.thumbnail }}" alt="preview">
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基準價格反推計算機</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        .section { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px; }
+        .section-title { font-weight: bold; margin-bottom: 10px; color: #555; }
+        .input-group { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; }
+        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 5px; }
+        button:hover { background-color: #0056b3; }
+        .result { margin-top: 15px; padding: 10px; background: #e7f3ff; border-radius: 4px; text-align: center; font-weight: bold; }
+        .base-price { font-size: 20px; color: #007bff; }
+        .final-price { font-size: 24px; color: #28a745; }
+        .note { font-size: 12px; color: #666; margin-top: 8px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📊 基準價格反推計算機</h2>
+    
+    <!-- 第一段：反推原價 -->
+    <div class="section">
+        <div class="section-title">🔹 步驟 1：設定基準（反推原價）</div>
+        <div class="input-group">
+            <label>已知變動後的價格 (元)</label>
+            <input type="number" id="refPrice" placeholder="例如：99">
+        </div>
+        <div class="input-group">
+            <label>對應的漲跌百分比 (%)</label>
+            <input type="number" id="refPercent" placeholder="例如：-1 代表跌 1%">
+            <div class="note">💡 輸入負數代表跌，正數代表漲</div>
+        </div>
+        <button onclick="calculateBase()">🔍 反推原價</button>
+        <div class="result hidden" id="baseResult">
+            推算基準原價：<span class="base-price" id="basePriceDisplay">--</span> 元
+        </div>
+    </div>
+
+    <!-- 第二段：計算新價格 -->
+    <div class="section">
+        <div class="section-title">🔹 步驟 2：計算新價格</div>
+        <div class="input-group">
+            <label>新的漲跌百分比 (%)</label>
+            <input type="number" id="newPercent" placeholder="例如：-3">
+        </div>
+        <button onclick="calculateFinal()" id="calcFinalBtn" disabled>💰 計算最終價格</button>
+        <div class="result hidden" id="finalResult">
+            最終價格：<span class="final-price" id="finalPriceDisplay">--</span> 元
+        </div>
+    </div>
 </div>
+
+<script>
+    let basePrice = null;
+
+    function calculateBase() {
+        const refPrice = parseFloat(document.getElementById('refPrice').value);
+        const refPercent = parseFloat(document.getElementById('refPercent').value);
+        const baseResult = document.getElementById('baseResult');
+        const basePriceDisplay = document.getElementById('basePriceDisplay');
+        const calcFinalBtn = document.getElementById('calcFinalBtn');
+
+        if (isNaN(refPrice) || isNaN(refPercent)) {
+            alert('❌ 請輸入有效的數字');
+            return;
+        }
+
+        // 反推原價公式：原價 = 現價 / (1 + 百分比/100)
+        basePrice = refPrice / (1 + refPercent / 100);
+        
+        basePriceDisplay.textContent = basePrice.toFixed(2);
+        baseResult.classList.remove('hidden');
+        calcFinalBtn.disabled = false;
+        
+        // 清空第二段結果
+        document.getElementById('finalResult').classList.add('hidden');
+    }
+
+    function calculateFinal() {
+        if (basePrice === null) {
+            alert('❌ 請先完成步驟 1 推算原價');
+            return;
+        }
+        
+        const newPercent = parseFloat(document.getElementById('newPercent').value);
+        const finalResult = document.getElementById('finalResult');
+        const finalPriceDisplay = document.getElementById('finalPriceDisplay');
+
+        if (isNaN(newPercent)) {
+            alert('❌ 請輸入有效的百分比');
+            return;
+        }
+
+        // 計算新價格：新價 = 原價 * (1 + 新百分比/100)
+        const finalPrice = basePrice * (1 + newPercent / 100);
+        
+        finalPriceDisplay.textContent = finalPrice.toFixed(2);
+        finalResult.classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
+
+
