@@ -24,7 +24,7 @@ layout: default
         <div class="card-grid">
             {% for post in site.posts %}
             <article class="card">
-                <div class="card-image" style="background-image: url('{{ post.thumbnail }}');"></div>
+                <div class="card-image" style="background-image: url('{{ post.thumbnail | relative_url }}');"></div>
                 <div class="card-content">
                     <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
                     <h3>{{ post.title }}</h3>
