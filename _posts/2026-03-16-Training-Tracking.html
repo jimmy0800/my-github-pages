@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-TW"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高效 ABC-ABC 訓練追蹤</title>
+    <style>
+        :root {
+            --primary: #2196F3; /* 換成更精悍的藍色 */
+            --secondary: #FF5722;
+            --bg: #F0F2F5;
+            --card-bg: #FFFFFF;
+            --text: #1A1A1A;
+            --gray: #757575;
+        }
+
+        body { font-family: -apple-system, system-ui, sans-serif; background-color: var(--bg); margin: 0; padding: 16px; color: var(--text); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .header h1 { font-size: 18px; margin: 0; color: var(--primary); }
+
+        /* 循環切換器 */
+        .cycle-switcher { display: flex; background: #DDD; border-radius: 20px; padding: 2px; margin-bottom: 15px; }
+        .cycle-btn { flex: 1; padding: 6px; text-align: center; border-radius: 18px; font-size: 13px; cursor: pointer; transition: 0.2s; font-weight: bold; color: var(--gray); }
+        .cycle-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+        .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
+        .tab { flex: 1; padding: 12px; text-align: center; background: #E0E0E0; border-radius: 8px; cursor: pointer; font-weight: bold; color: var(--gray); }
+        .tab.active { background: var(--primary); color: white; }
+
+        /* 訓練卡片 */
+        .exercise-card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .ex-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .ex-name { font-weight: 800; font-size: 15px; }
+        .ex-counter { font-size: 12px; color: var(--primary); background: #E3F2FD; padding: 2px 8px; border-radius: 10px; }
+        .ex-detail { display: flex; align-items: center; gap: 12px; }
+        .ex-icon { font-size: 20px; width: 40px; text-align: center; }
+        .ex-target { flex: 1; font-size: 12px; color: var(--gray); line-height: 1.4; }
+
+        .btn-complete { background: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        .btn-complete.done { background: #4CAF50; }
+
+        /* 有氧計時器 */
+        .card-zone2 { background: linear-gradient(135deg, #424242, #212121); color: white; border-radius: 12px; padding: 15px; margin-top: 20px; text-align: center; }
+        .timer-display { font-size: 24px; font-weight: bold; margin: 10px 0; font-family: monospace; }
+        .btn-timer { background: var(--secondary); border: none; color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; }
+
+        .reset-btn { color: var(--gray); font-size: 12px; cursor: pointer; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>ABC-ABC 訓練執行</h1>
+    <span class="reset-btn" onclick="resetProgress()">重置本日</span>
+</div>
+
+<div class="cycle-switcher">
+    <div id="cbtn1" class="cycle-btn active" onclick="switchCycle(1)">Cycle 1 (一/二/三)</div>
+    <div id="cbtn2" class="cycle-btn" onclick="switchCycle(2)">Cycle 2 (四/五/六)</div>
+</div>
+
+<div class="tabs">
+    <div id="tabA" class="tab active" onclick="switchTab('A')">Day A (推)</div>
+    <div id="tabB" class="tab" onclick="switchTab('B')">Day B (拉)</div>
+    <div id="tabC" class="tab" onclick="switchTab('C')">Day C (下肢)</div>
+</div>
+
+<div id="exercise-list"></div>
+
+<div class="card-zone2">
+    <div style="font-size: 13px; opacity: 0.8;">訓練後 Zone 2 有氧 (15 min)</div>
+    <div class="timer-display" id="timer">15:00</div>
+    <button class="btn-timer" id="timerBtn" onclick="toggleTimer()">開始計時</button>
+</div>
+
+<script>
+    const workoutData = {
+        A: {
+            1: [
+                { id: 'a1_1', name: 'Incline Press (上胸)', target: '上胸/三頭', sets: 3, icon: '🔼' },
+                { id: 'a1_2', name: 'Shoulder Press Machine (肩推)', target: '前/中三角', sets: 3, icon: '👤' },
+                { id: 'a1_3', name: 'Machine Fly (器械飛鳥)', target: '胸大肌內側', sets: 3, icon: '🦋' },
+                { id: 'a1_4', name: 'Triceps Pushdown (繩索下壓)', target: '三頭肌外側', sets: 3, icon: '⬇️' }
+            ],
+            2: [
+                { id: 'a2_1', name: 'Chest Press (平胸器械)', target: '胸大肌/三頭', sets: 3, icon: '⚖️' },
+                { id: 'a2_2', name: 'Lateral Raise Machine (側平舉)', target: '中三角肌', sets: 3, icon: '👐' },
+                { id: 'a2_3', name: 'Dips Machine (撐體)', target: '下胸/三頭', sets: 3, icon: '💪' },
+                { id: 'a2_4', name: 'Overhead Extension (過頭伸展)', target: '三頭肌長頭', sets: 3, icon: '⬆️' }
+            ]
+        },
+        B: {
+            1: [
+                { id: 'b1_1', name: 'Lat Pulldown (高位下拉)', target: '背闊肌/寬度', sets: 3, icon: '👐' },
+                { id: 'b1_2', name: 'Seated Row (窄手划船)', target: '中背/厚度', sets: 3, icon: '🚣' },
+                { id: 'b1_3', name: 'Rear Delt Fly (後三角飛鳥)', target: '後三角肌', sets: 3, icon: '🦋' },
+                { id: 'b1_4', name: 'Hammer Curls (錘式彎舉)', target: '肱橈肌/二頭', sets: 3, icon: '🔨' }
+            ],
+            2: [
+                { id: 'b2_1', name: 'Neutral Pulldown (對掌下拉)', target: '下背闊肌', sets: 3, icon: '🤲' },
+                { id: 'b2_2', name: 'Vertical Row (垂直划船)', target: '上背/厚度', sets: 3, icon: '🏗️' },
+                { id: 'b2_3', name: 'Face Pulls (繩索面拉)', target: '後三角/上背', sets: 3, icon: '👺' },
+                { id: 'b2_4', name: 'Bicep Curls (器械彎舉)', target: '肱二頭肌', sets: 3, icon: '💪' }
+            ]
+        },
+        C: {
+            1: [
+                { id: 'c1_1', name: 'Hip Thrust Machine (器械臀推)', target: '臀大肌 (核心穩)', sets: 3, icon: '🍑' },
+                { id: 'c1_2', name: 'Leg Press (器械腿推)', target: '股四頭/臀肌', sets: 3, icon: '🦶' },
+                { id: 'c1_3', name: 'Leg Extension (腿伸展)', target: '股四頭肌孤立', sets: 3, icon: '🦵' },
+                { id: 'c1_4', name: 'Vertical Knee Raise (舉腿)', target: '腹直肌', sets: 3, icon: '🧘' }
+            ],
+            2: [
+                { id: 'c2_1', name: 'Hip Thrust Machine (器械臀推)', target: '臀部深度刺激', sets: 3, icon: '🍑' },
+                { id: 'c2_2', name: 'V-Squat (V型深蹲)', target: '下肢整體/爆發力', sets: 3, icon: '🏋️' },
+                { id: 'c2_3', name: 'Leg Curl (腿彎舉)', target: '腿後腱肌群', sets: 3, icon: '↩️' },
+                { id: 'c2_4', name: 'Plank (棒式) / Cable Crunch', target: '核心抗伸展', sets: 3, icon: '🧱' }
+            ]
+        }
+    };
+
+    let currentTab = 'A';
+    let currentCycle = 1;
+    let progress = JSON.parse(localStorage.getItem('gym_v3_progress')) || {};
+
+    function switchTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab' + tab).classList.add('active');
+        render();
+    }
+
+    function switchCycle(cycle) {
+        currentCycle = cycle;
+        document.getElementById('cbtn1').classList.toggle('active', cycle === 1);
+        document.getElementById('cbtn2').classList.toggle('active', cycle === 2);
+        render();
+    }
+
+    function completeSet(id, max) {
+        if (!progress[id]) progress[id] = 0;
+        if (progress[id] < max) {
+            progress[id]++;
+            localStorage.setItem('gym_v3_progress', JSON.stringify(progress));
+            render();
+        }
+    }
+
+    function resetProgress() {
+        if(confirm('重置本日進度？')) {
+            progress = {};
+            localStorage.removeItem('gym_v3_progress');
+            render();
+        }
+    }
+
+    function render() {
+        const container = document.getElementById('exercise-list');
+        const list = workoutData[currentTab][currentCycle];
+        
+        container.innerHTML = list.map(ex => {
+            const currentSets = progress[ex.id] || 0;
+            const isDone = currentSets >= ex.sets;
+            return `
+                <div class="exercise-card">
+                    <div class="ex-info">
+                        <div class="ex-name">${ex.name}</div>
+                        <div class="ex-counter">${currentSets}/${ex.sets} 組</div>
+                    </div>
+                    <div class="ex-detail">
+                        <div class="ex-icon">${ex.icon}</div>
+                        <div class="ex-target">${ex.target}<br>10-12 次/力竭</div>
+                        <button class="btn-complete ${isDone ? 'done' : ''}" 
+                                onclick="completeSet('${ex.id}', ${ex.sets})">
+                            ${isDone ? 'OK' : '完成'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Timer Logic
+    let timeLeft = 900;
+    let timerId = null;
+    function toggleTimer() {
+        const btn = document.getElementById('timerBtn');
+        if (timerId) {
+            clearInterval(timerId);
+            timerId = null;
+            btn.innerText = '恢復計時';
+        } else {
+            btn.innerText = '暫停';
+            timerId = setInterval(() => {
+                timeLeft--;
+                const m = Math.floor(timeLeft / 60);
+                const s = timeLeft % 60;
+                document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    alert('Zone 2 結束！辛苦了！');
+                }
+            }, 1000);
+        }
+    }
+
+    render();
+</script>
+
+</body></html>
