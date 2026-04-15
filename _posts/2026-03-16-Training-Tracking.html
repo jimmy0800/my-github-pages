@@ -1,7 +1,7 @@
 ---
 layout: null
 title: "腹肌雕刻訓練追蹤｜Justin's 12-Week Cut"
-description: "手機優化版｜動作雙語"
+description: "手機優化版｜動作雙語＋緊湊排版＋進度自動儲存"
 thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
 ---
 
@@ -349,4 +349,103 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
             ],
             2: [
                 { id: 'b2_1', name: 'Front Squat<br><small>前蹲</small>', target: '股四頭 / 上背<br>4 × 8-10 次', equipment: '槓鈴 + 深蹲架', sets: 4, icon: '🎯', isAbs: false },
-                { id: 'b2_2', name: 'Bulgarian Split Squat<br
+                { id: 'b2_2', name: 'Bulgarian Split Squat<br><small>保加利亞分腿蹲</small>', target: '股四頭 / 臀肌（單側）<br>3 × 10/腿', equipment: '啞鈴 + 訓練椅', sets: 3, icon: '🦵', isAbs: false },
+                { id: 'b2_3', name: 'Lying Leg Curl<br><small>臥式腿彎舉</small>', target: '腿後肌孤立<br>3 × 12-15 次', equipment: '腿彎舉機', sets: 3, icon: '↩️', isAbs: false },
+                { id: 'b2_4', name: '🔥 Pallof Press<br><small>帕洛夫推</small>', target: '抗旋轉核心<br>3 × 12/側', equipment: '滑輪機 + 把手', sets: 3, icon: '🛡️', isAbs: true },
+                { id: 'b2_5', name: '🔥 Hanging Leg Raise<br><small>懸垂舉腿</small>', target: '下腹肌（進階）<br>3 × 10-12 次', equipment: '單槓', sets: 3, icon: '🧘', isAbs: true },
+                { id: 'b2_6', name: '🔥 Ab Wheel Rollout<br><small>健腹輪</small>', target: '全核心抗伸展<br>3 × 8-12 次', equipment: '健腹輪', sets: 3, icon: '🎡', isAbs: true }
+            ]
+        },
+        C: {
+            1: [
+                { id: 'c1_1', name: 'Pull-ups / Lat Pulldown<br><small>引體向上 / 高位下拉</small>', target: '背闊肌 / 二頭肌<br>4 × 6-10 次', equipment: '單槓 / 高位下拉機', sets: 4, icon: '👐', isAbs: false },
+                { id: 'c1_2', name: 'Bent-over Barbell Row<br><small>俯身槓鈴划船</small>', target: '背闊肌 / 菱形肌<br>3 × 8-10 次', equipment: '槓鈴', sets: 3, icon: '🚣', isAbs: false },
+                { id: 'c1_3', name: 'Face Pull<br><small>繩索面拉</small>', target: '後三角 / 旋轉肌群<br>3 × 15-20 次', equipment: '滑輪機 + 繩索', sets: 3, icon: '👺', isAbs: false },
+                { id: 'c1_4', name: '🔥 Ab Wheel Rollout<br><small>健腹輪</small>', target: '全核心<br>3 × 8-12 次', equipment: '健腹輪', sets: 3, icon: '🎡', isAbs: true },
+                { id: 'c1_5', name: '🔥 Bicycle Crunch<br><small>空中腳踏車</small>', target: '腹斜肌 / 上下腹肌<br>3 × 20/側', equipment: '瑜伽墊', sets: 3, icon: '🚴', isAbs: true },
+                { id: 'c1_6', name: '🔥 Pallof Press<br><small>帕洛夫推</small>', target: '抗旋轉核心<br>3 × 12/側', equipment: '滑輪機 + 把手', sets: 3, icon: '🛡️', isAbs: true }
+            ],
+            2: [
+                { id: 'c2_1', name: 'Neutral Grip Pulldown<br><small>對握高位下拉</small>', target: '下背闊肌<br>4 × 10-12 次', equipment: '高位下拉機 + V 把', sets: 4, icon: '🤲', isAbs: false },
+                { id: 'c2_2', name: 'Seated Cable Row<br><small>坐姿繩索划船</small>', target: '中背厚度<br>3 × 10-12 次', equipment: '滑輪機 + 把手', sets: 3, icon: '🚣', isAbs: false },
+                { id: 'c2_3', name: 'Reverse Pec Deck<br><small>反向飛鳥機</small>', target: '後三角孤立<br>3 × 15-20 次', equipment: '飛鳥機', sets: 3, icon: '🦋', isAbs: false },
+                { id: 'c2_4', name: '🔥 Kneeling Cable Crunch<br><small>跪姿繩索捲腹</small>', target: '上腹肌（負重）<br>3 × 15-20 次', equipment: '滑輪機 + 繩索', sets: 3, icon: '🌀', isAbs: true },
+                { id: 'c2_5', name: '🔥 Russian Twist<br><small>俄羅斯轉體</small>', target: '腹斜肌<br>3 × 20 總次', equipment: '藥球 / 瑜伽墊', sets: 3, icon: '🔄', isAbs: true },
+                { id: 'c2_6', name: '🔥 Flutter Kicks<br><small>交替踢腿</small>', target: '下腹肌耐力<br>3 × 30 秒', equipment: '瑜伽墊', sets: 3, icon: '🦵', isAbs: true }
+            ]
+        }
+    };
+
+    let currentTab = 'A';
+    let currentCycle = 1;
+    let progress = JSON.parse(localStorage.getItem('justin_abs_tracker_mobile')) || {};
+
+    function switchTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab' + tab).classList.add('active');
+        render();
+    }
+
+    function switchCycle(cycle) {
+        currentCycle = cycle;
+        document.getElementById('cbtn1').classList.toggle('active', cycle === 1);
+        document.getElementById('cbtn2').classList.toggle('active', cycle === 2);
+        render();
+    }
+
+    function completeSet(id, max) {
+        if (!progress[id]) progress[id] = 0;
+        if (progress[id] < max) {
+            progress[id]++;
+            localStorage.setItem('justin_abs_tracker_mobile', JSON.stringify(progress));
+            render();
+        }
+    }
+
+    function resetProgress() {
+        if(confirm('重置本日進度？')) {
+            const list = workoutData[currentTab][currentCycle];
+            list.forEach(ex => delete progress[ex.id]);
+            localStorage.setItem('justin_abs_tracker_mobile', JSON.stringify(progress));
+            render();
+        }
+    }
+
+    function render() {
+        const container = document.getElementById('exercise-list');
+        const list = workoutData[currentTab][currentCycle];
+        
+        container.innerHTML = list.map(ex => {
+            const currentSets = progress[ex.id] || 0;
+            const isDone = currentSets >= ex.sets;
+            const cardClass = ex.isAbs ? 'exercise-card abs-focus' : 'exercise-card';
+            
+            return `
+                <div class="${cardClass}">
+                    <div class="ex-header">
+                        <div class="ex-name">${ex.name}</div>
+                        <div class="ex-counter">${currentSets}/${ex.sets}</div>
+                    </div>
+                    <div class="ex-detail">
+                        <div class="ex-icon">${ex.icon}</div>
+                        <div class="ex-target">
+                            ${ex.target}
+                            <span class="ex-equipment">${ex.equipment}</span>
+                        </div>
+                        <button class="btn-complete ${isDone ? 'done' : ''}" 
+                                onclick="completeSet('${ex.id}', ${ex.sets})"
+                                ${isDone ? 'disabled' : ''}>
+                            ${isDone ? '✓' : '＋1'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', render);
+</script>
+
+</body>
+</html>
