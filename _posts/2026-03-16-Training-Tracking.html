@@ -1,7 +1,7 @@
 ---
 layout: null
 title: "腹肌雕刻訓練追蹤｜Justin's 12-Week Cut"
-description: "手機優化版｜動作雙語＋緊湊排版＋進度自動儲存"
+description: "手機優化版｜重量紀錄"
 thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
 ---
 
@@ -32,7 +32,7 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
             padding: 12px; 
             color: var(--text); 
             line-height: 1.4;
-            font-size: 16px; /* 基準字體放大 */
+            font-size: 16px;
         }
         
         .header { 
@@ -49,245 +49,87 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
             color: var(--primary); 
             font-weight: 700;
         }
-        .subtitle {
-            font-size: 13px;
-            color: var(--gray);
-            margin-top: 3px;
-        }
+        .subtitle { font-size: 13px; color: var(--gray); margin-top: 3px; }
 
-        /* 循環切換器 - 手機友善 */
         .cycle-switcher { 
-            display: flex; 
-            background: #DDD; 
-            border-radius: 18px; 
-            padding: 3px; 
-            margin-bottom: 12px; 
+            display: flex; background: #DDD; border-radius: 18px; padding: 3px; margin-bottom: 12px; 
         }
         .cycle-btn { 
-            flex: 1; 
-            padding: 8px 4px; 
-            text-align: center; 
-            border-radius: 16px; 
-            font-size: 14px; 
-            cursor: pointer; 
-            transition: 0.2s; 
-            font-weight: 500;
-            color: var(--gray); 
+            flex: 1; padding: 8px 4px; text-align: center; border-radius: 16px; font-size: 14px; 
+            cursor: pointer; transition: 0.2s; font-weight: 500; color: var(--gray); 
         }
         .cycle-btn.active { 
-            background: white; 
-            color: var(--primary); 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08); 
-            font-weight: 600;
+            background: white; color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.08); font-weight: 600;
         }
 
-        .tabs { 
-            display: flex; 
-            gap: 6px; 
-            margin-bottom: 12px; 
-        }
+        .tabs { display: flex; gap: 6px; margin-bottom: 12px; }
         .tab { 
-            flex: 1; 
-            padding: 10px 6px; 
-            text-align: center; 
-            background: #E0E0E0; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: 500; 
-            color: var(--gray);
-            font-size: 14px;
-            transition: 0.2s;
+            flex: 1; padding: 10px 6px; text-align: center; background: #E0E0E0; border-radius: 8px; 
+            cursor: pointer; font-weight: 500; color: var(--gray); font-size: 14px; transition: 0.2s;
         }
-        .tab.active { 
-            background: var(--primary); 
-            color: white; 
-            font-weight: 600;
+        .tab.active { background: var(--primary); color: white; font-weight: 600; }
+
+        /* 訓練卡片 */
+        .exercise-card { 
+            background: var(--card-bg); border-radius: var(--card-radius); padding: 11px 12px; 
+            margin-bottom: 9px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 4px solid var(--primary);
+        }
+        .exercise-card.abs-focus { border-left-color: var(--abs-accent); background: #fff8fa; }
+        
+        .ex-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 7px; gap: 8px; }
+        .ex-name { font-weight: 700; font-size: 15px; line-height: 1.35; flex: 1; }
+        .ex-name small { display: block; font-weight: 400; color: var(--gray); font-size: 13px; margin-top: 2px; }
+        .ex-counter { 
+            font-size: 12px; color: var(--primary); background: #E3F2FD; padding: 3px 9px; 
+            border-radius: 14px; font-weight: 600; white-space: nowrap; flex-shrink: 0;
+        }
+        
+        .ex-detail { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .ex-icon { font-size: 19px; width: 26px; text-align: center; flex-shrink: 0; line-height: 1; }
+        .ex-target { flex: 1 1 65%; min-width: 110px; font-size: 13px; color: var(--gray); line-height: 1.35; }
+        .ex-target strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 14px; }
+        .ex-equipment {
+            font-size: 12px; color: var(--primary); background: #E8F4FD; padding: 2px 6px; 
+            border-radius: 4px; display: inline-block; margin-top: 4px; font-weight: 500;
         }
 
-        /* 訓練卡片 - 緊湊設計 */
-        .exercise-card { 
-            background: var(--card-bg); 
-            border-radius: var(--card-radius); 
-            padding: 12px 14px; 
-            margin-bottom: 10px; 
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06); 
-            border-left: 4px solid var(--primary);
+        /* 重量輸入框 */
+        .weight-wrap { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+        .w-input {
+            width: 48px; padding: 5px 4px; border: 1.5px solid #ddd; border-radius: 6px; 
+            font-size: 14px; text-align: center; background: #f9f9f9; color: var(--text); 
+            font-weight: 600; transition: 0.2s;
         }
-        .exercise-card.abs-focus {
-            border-left-color: var(--abs-accent);
-            background: #fff8fa;
-        }
-        
-        .ex-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-start;
-            margin-bottom: 8px; 
-            gap: 8px;
-        }
-        .ex-name { 
-            font-weight: 700; 
-            font-size: 16px; /* 動作名稱放大 */
-            line-height: 1.35;
-            flex: 1;
-        }
-        .ex-name small {
-            display: block;
-            font-weight: 400;
-            color: var(--gray);
-            font-size: 14px; /* 中文小字同步放大 */
-            margin-top: 2px;
-        }
-        .ex-counter { 
-            font-size: 13px; 
-            color: var(--primary); 
-            background: #E3F2FD; 
-            padding: 4px 12px; 
-            border-radius: 14px; 
-            font-weight: 600;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        
-        .ex-detail { 
-            display: flex; 
-            align-items: flex-start; 
-            gap: 10px; 
-        }
-        .ex-icon { 
-            font-size: 20px; 
-            width: 28px; 
-            text-align: center; 
-            flex-shrink: 0;
-            line-height: 1;
-        }
-        .ex-target { 
-            flex: 1; 
-            font-size: 14px; /* 部位文字放大 */
-            color: var(--gray); 
-            line-height: 1.35;
-        }
-        .ex-target strong {
-            color: var(--text);
-            display: block;
-            margin-bottom: 3px;
-            font-size: 15px;
-        }
-        .ex-equipment {
-            font-size: 13px; /* 器材文字放大 */
-            color: var(--primary);
-            background: #E8F4FD;
-            padding: 3px 8px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-top: 5px;
-            font-weight: 500;
-        }
+        .w-input:focus { border-color: var(--primary); outline: none; background: #fff; }
+        .w-unit { font-size: 12px; color: var(--gray); font-weight: 500; }
 
         .btn-complete { 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 10px 18px; 
-            border-radius: 8px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            font-size: 14px;
-            min-height: 44px; /* 觸控友善最小高度 */
-            min-width: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: 0.15s;
+            background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 7px; 
+            font-weight: 600; cursor: pointer; font-size: 13px; min-height: 42px; min-width: 60px; 
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.15s;
         }
-        .btn-complete:active { transform: scale(0.98); }
-        .btn-complete.done { 
-            background: var(--success); 
-            cursor: default;
-        }
-        .btn-complete:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
+        .btn-complete:active { transform: scale(0.97); }
+        .btn-complete.done { background: var(--success); cursor: default; }
+        .btn-complete:disabled { opacity: 0.7; cursor: not-allowed; }
 
         .reset-btn { 
-            color: var(--gray); 
-            font-size: 13px; 
-            cursor: pointer; 
-            text-decoration: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: 0.2s;
-            min-height: 36px;
-            display: flex;
-            align-items: center;
+            color: var(--gray); font-size: 13px; cursor: pointer; padding: 6px 10px; 
+            border-radius: 6px; transition: 0.2s; min-height: 36px; display: flex; align-items: center;
         }
         .reset-btn:active { background: #f5f5f5; }
         .reset-btn:hover { color: var(--abs-accent); }
         
         .progress-tip {
-            font-size: 13px;
-            color: var(--gray);
-            text-align: center;
-            margin: 6px 0 12px;
-            padding: 8px 12px;
-            background: #f8f8f8;
-            border-radius: 8px;
-            line-height: 1.4;
+            font-size: 12px; color: var(--gray); text-align: center; margin: 5px 0 10px; 
+            padding: 7px 10px; background: #f8f8f8; border-radius: 8px; line-height: 1.4;
         }
-        
-        /* 手機專屬優化 */
-        @media (max-width: 480px) {
-            body { padding: 10px; font-size: 16px; }
-            .header { margin-bottom: 10px; padding-bottom: 8px; }
-            .header h1 { font-size: 16px; }
-            .subtitle { font-size: 12px; }
-            
-            .cycle-switcher { margin-bottom: 10px; }
-            .cycle-btn { font-size: 13px; padding: 7px 4px; }
-            
-            .tabs { gap: 5px; margin-bottom: 10px; }
-            .tab { font-size: 13px; padding: 9px 4px; }
-            
-            .exercise-card { 
-                padding: 11px 12px; 
-                margin-bottom: 9px; 
-                border-radius: 9px;
-            }
-            
-            .ex-header { margin-bottom: 7px; }
-            .ex-name { font-size: 15px; }
-            .ex-name small { font-size: 13px; }
-            .ex-counter { font-size: 12px; padding: 3px 10px; }
-            
-            .ex-detail { gap: 9px; }
-            .ex-icon { font-size: 19px; width: 26px; }
-            .ex-target { font-size: 13px; }
-            .ex-target strong { font-size: 14px; margin-bottom: 2px; }
-            .ex-equipment { font-size: 12px; padding: 2px 7px; margin-top: 4px; }
-            
-            .btn-complete { 
-                padding: 9px 14px; 
-                font-size: 13px; 
-                min-height: 42px;
-                min-width: 65px;
-            }
-            
-            .progress-tip { 
-                font-size: 12px; 
-                padding: 7px 10px; 
-                margin: 5px 0 10px;
-            }
-        }
-        
-        /* 超小螢幕進一步壓縮 */
-        @media (max-width: 360px) {
-            .ex-detail { flex-direction: column; gap: 6px; }
-            .ex-target { width: 100%; }
-            .btn-complete { width: 100%; margin-top: 4px; }
-            .ex-header { flex-wrap: wrap; }
-            .ex-counter { order: 2; margin-top: 4px; }
+
+        @media (max-width: 380px) {
+            .ex-detail { gap: 6px; }
+            .ex-target { min-width: 100%; order: 3; margin-top: 2px; }
+            .weight-wrap { order: 1; }
+            .btn-complete { order: 2; }
+            .w-input { width: 52px; }
         }
     </style>
 </head>
@@ -298,7 +140,7 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
         <h1>🔥 腹肌雕刻訓練追蹤</h1>
         <div class="subtitle">目標：體脂 15% → 10-12%｜3 個月計畫</div>
     </div>
-    <span class="reset-btn" onclick="resetProgress()">🔄 重置</span>
+    <span class="reset-btn" onclick="resetProgress()">🔄 重置組數</span>
 </div>
 
 <div class="cycle-switcher">
@@ -313,7 +155,7 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
 </div>
 
 <div class="progress-tip">
-    💡 🔥 為腹肌動作｜點「＋1 組」記錄｜自動儲存
+    💡 🔥 為腹肌動作｜輸入重量自動儲存｜組數點擊記錄
 </div>
 
 <div id="exercise-list"></div>
@@ -378,7 +220,8 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
 
     let currentTab = 'A';
     let currentCycle = 1;
-    let progress = JSON.parse(localStorage.getItem('justin_abs_tracker_mobile')) || {};
+    let progress = JSON.parse(localStorage.getItem('justin_sets_v2')) || {};
+    let weights = JSON.parse(localStorage.getItem('justin_weights_v2')) || {};
 
     function switchTab(tab) {
         currentTab = tab;
@@ -398,16 +241,16 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
         if (!progress[id]) progress[id] = 0;
         if (progress[id] < max) {
             progress[id]++;
-            localStorage.setItem('justin_abs_tracker_mobile', JSON.stringify(progress));
+            localStorage.setItem('justin_sets_v2', JSON.stringify(progress));
             render();
         }
     }
 
     function resetProgress() {
-        if(confirm('重置本日進度？')) {
+        if(confirm('僅重置「組數進度」，重量紀錄將保留。\n確定要重置嗎？')) {
             const list = workoutData[currentTab][currentCycle];
             list.forEach(ex => delete progress[ex.id]);
-            localStorage.setItem('justin_abs_tracker_mobile', JSON.stringify(progress));
+            localStorage.setItem('justin_sets_v2', JSON.stringify(progress));
             render();
         }
     }
@@ -420,18 +263,23 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
             const currentSets = progress[ex.id] || 0;
             const isDone = currentSets >= ex.sets;
             const cardClass = ex.isAbs ? 'exercise-card abs-focus' : 'exercise-card';
-            
+            const lastW = weights[ex.id] ?? '';
+
             return `
                 <div class="${cardClass}">
                     <div class="ex-header">
                         <div class="ex-name">${ex.name}</div>
-                        <div class="ex-counter">${currentSets}/${ex.sets}</div>
+                        <div class="ex-counter">${currentSets}/${ex.sets} 組</div>
                     </div>
                     <div class="ex-detail">
                         <div class="ex-icon">${ex.icon}</div>
                         <div class="ex-target">
                             ${ex.target}
                             <span class="ex-equipment">${ex.equipment}</span>
+                        </div>
+                        <div class="weight-wrap">
+                            <input type="number" step="0.5" inputmode="decimal" class="w-input" data-id="${ex.id}" value="${lastW}" placeholder="0">
+                            <span class="w-unit">kg</span>
                         </div>
                         <button class="btn-complete ${isDone ? 'done' : ''}" 
                                 onclick="completeSet('${ex.id}', ${ex.sets})"
@@ -442,6 +290,16 @@ thumbnail: "/assets/images/2026-04-12-abs-tracker.jpg"
                 </div>
             `;
         }).join('');
+
+        // 綁定重量輸入事件（使用事件委派避免重複綁定）
+        container.querySelectorAll('.w-input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const id = e.target.dataset.id;
+                const val = e.target.value === '' ? null : parseFloat(e.target.value);
+                weights[id] = val;
+                localStorage.setItem('justin_weights_v2', JSON.stringify(weights));
+            });
+        });
     }
 
     document.addEventListener('DOMContentLoaded', render);
